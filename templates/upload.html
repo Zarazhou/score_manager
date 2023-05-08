@@ -1,0 +1,9 @@
+{% block content %}
+<h2>File Upload Form</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    {{ form.upload_excel }}
+    {{ form.submit }}
+</form>
+{% endblock %}

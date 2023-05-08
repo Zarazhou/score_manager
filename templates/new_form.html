@@ -1,0 +1,65 @@
+<!--<form method="post">
+    {{ form.csrf_token }}
+    {{ form.name.label }}<br>
+    {{ form.name }}<br>
+    {% if form.name.errors %}
+        {% for message in form.name.errors %}
+        <small class="error">{{ message }}</small><br>
+        {% endfor %}
+    {% endif %}
+    {{ form.math_score.label }}<br>
+    {{ form.math_score }}<br>
+    {% if form.math_score.errors %}
+        {% for message in form.math_score.errors %}
+        <small class="error">{{ message }}</small><br>
+        {% endfor %}
+    {% endif %}
+     {{ form.chinese_score.label }}<br>
+    {{ form.chinese_score }}<br>
+    {% if form.chinese_score.errors %}
+        {% for message in form.chinese_score.errors %}
+        <small class="error">{{ message }}</small><br>
+        {% endfor %}
+    {% endif %}
+    {{ form.submit }}<br>
+
+</form>
+<!DOCTYPE html>-->
+<html>
+<head>
+  <title>new form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-3">
+  <h2>new form</h2>
+	<form method="post",action="">
+		{{ form.csrf_token }}
+	  <div class="mb-3 mt-3">
+		{{ form.name.label(class="form-label") }}
+		   {{ form.name(class='form-control') }}
+	  </div>
+
+	  <div class="mb-3">
+		<label class="form-label">math_score:</label>
+		{{ form.math_score(class='form-control') }}
+	  </div>
+
+	<div class="mb-3">
+		<label class="form-label">chinese_score:</label>
+		{{ form.chinese_score(class='form-control') }}
+	  </div>
+	<div class="mb-3">
+		<label hidden="hidden" class="form-label">total_score:</label>
+		{{ form.total_score(class='form-control readonly') }}
+	  </div>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>表单主页</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <main>
+        <!--{% from 'bootstrap/pagination.html' import render_pagination %}-->
+                <a href="{{ url_for('.downloads') }}">下载表单</a>
+                <a href="{{ url_for('.uploads') }}">导入表单</a>
+        {% for message in get_flashed_messages() %}
+        <div class="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+
+        <div class="container mt-3">
+               <h2>创建新的表格</h2>
+                <a href="{{ url_for('.new_form') }}"> new form</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>math_score</th>
+                    <th>chinese_score</th>
+                    <th>total_score</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            {% if scores %}
+            {% for score in scores %}
+            <tbody>
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ score.name }}</td>
+                <td>{{ score.math_score }}</td>
+                <td>{{ score.chinese_score }}</td>
+                <td>{{ score.total_score }}</td>
+                <td>
+                    <div class="btn-group">
+                    <a href="{{ url_for('.edit_form', form_id=score.id) }}" class="btn btn-info btn-sm">Edit</a>
+                    </div>
+                    <div class="btn-group">
+                     <form method="post" action="{{ url_for('.delete_form', form_id=score.id) }}">
+                         {{ form.csrf_token }}
+                         <!--{{ form.submit(class='btn') }}-->
+                         <input class="btn btn-warning btn-sm" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                     </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+        {% block content %}{% endblock content %}
+    {% endif %}
+    </main>
+        <p class="text-muted text-center">Tips: 学生成绩按照从大到小进行排序！</p>
+
+
+</body>
+</html>
