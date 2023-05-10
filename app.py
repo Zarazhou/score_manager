@@ -1,10 +1,9 @@
-import os, xlsxwriter, openpyxl
+import os, xlsxwriter, openpyxl,click
 from flask import Flask, render_template, url_for, session, flash, redirect, request, abort, send_from_directory,current_app
 from form import Create_score_subjectForm, EditScoreForm, DeleteScoreForm, UploadForm
 from flask_sqlalchemy import SQLAlchemy
 from utils import generate_filename, random_filename
 import contextlib
-from flask_bootstrap import Bootstrap4
 import pymysql
 from sqlalchemy import Column, Float, String
 
@@ -13,8 +12,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'WFAA'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://zara:zhourong1995929@127.0.0.1:3306/learning_mysql'
 db = SQLAlchemy(app)
-#bootstrap = Bootstrap4(app)
-app.config['INFO_PER_PAGE'] = 10
 app.config['DOWNLOAD_PATH'] = os.path.join(app.root_path, 'downloads')
 if not os.path.exists(app.config['DOWNLOAD_PATH']):
     os.makedirs(app.config['DOWNLOAD_PATH'])
@@ -26,15 +23,22 @@ if not os.path.exists(app.config['UPLOAD_PATH']):
 
 class Score_database(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), unique=True)
+    name = db.Column(db.String(40))
     math_score = db.Column(db.Float)
     chinese_score = db.Column(db.Float)
     total_score = db.Column(db.Float)
 
 
-with app.app_context():
-    # db.drop_all()
+@app.cli.command()
+@click.option('--drop', is_flag=True, help='Create after drop.')
+def initdb(drop):  #
+    """Initialize the database."""
+    if drop:
+        click.confirm('This operation will delete the database, do you want to continue?', abort=True)
+        db.drop_all()
+        click.echo('Drop tables.')
     db.create_all()
+    click.echo('Initialized database.')
 
 with app.app_context():
     def get_info():
@@ -91,11 +95,6 @@ with app.app_context():
 @app.route('/')
 def index():
     form = DeleteScoreForm()
-    #page = request.args.get('page', 1, type=int)
-    #per_page = app.config['INFO_PER_PAGE']
-    #pagination = Score_database.query.order_by(Score_database.total_score.desc()).paginate(
-        #page=page, per_page=per_page)
-    #items = pagination.items
     scores = Score_database.query.order_by(Score_database.total_score.desc())
     return render_template('index.html',scores=scores, form=form)
 
