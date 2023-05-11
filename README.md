@@ -1,5 +1,7 @@
 # score_manager
-demo链接:http://43.143.147.104:5000/
+demo链接:http://43.143.147.104:5000/  
+demo——picture  
+![image](https://github.com/Zarazhou/score_manager/blob/main/img/62e8f6e33c0f4c98b8f3618d06b6b44c.png)
 
 简介：
 学生分数管理系统
