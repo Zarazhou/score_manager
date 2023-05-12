@@ -188,3 +188,6 @@ def upload_infoToDatabse(filename):
         all_values.append(one_row_data)
         db.session.add_all(all_values)
         db.session.commit()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=5000)
