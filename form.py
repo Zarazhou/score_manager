@@ -5,14 +5,14 @@ from flask_wtf.file import FileField,FileRequired,FileAllowed,FileSize
 
 class Create_score_subjectForm(FlaskForm):
     name = StringField('Student name',validators=[DataRequired()])
-    math_score = FloatField('Math score',validators=[DataRequired(), NumberRange(min=0, max=100)])
+    math_score = FloatField('Math score',validators=[DataRequired(), NumberRange(min=0, max=100,message="请输入正确的分数")])
     chinese_score = FloatField('chinese score',validators=[DataRequired(), NumberRange(min=0, max=100)])
     total_score=HiddenField()
     submit = SubmitField()
 
 class EditScoreForm(FlaskForm):
     name = StringField('Student name',validators=[DataRequired()])
-    math_score = FloatField('Math score',validators=[DataRequired(), NumberRange(min=0, max=100)])
+    math_score = FloatField('Math score',validators=[DataRequired(), NumberRange(min=0, max=100,message="请输入正确的分数")])
     chinese_score = FloatField('chinese score',validators=[DataRequired(), NumberRange(min=0, max=100)])
     total_score=HiddenField()
     submit = SubmitField()
